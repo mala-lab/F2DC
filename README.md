@@ -1,4 +1,4 @@
-# Federated Feature Decoupling and Calibration (CVPR 2026)
+# $F^{2}DC$ - Federated Feature Decoupling and Calibration (CVPR 2026)
 
 Official implementation of CVPR 2026 paper: [*'Domain-Skewed Federated Learning with Feature Decoupling and Calibration'*](https://arxiv.org/pdf/2403.06495.pdf).
 
