@@ -1,6 +1,6 @@
 # !/usr/bin/env python
 # -*- coding: utf-8 -*-
-# Python version: 3.9
+# Python version: 3.10
 
 import os
 import sys
