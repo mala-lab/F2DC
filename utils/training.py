@@ -95,6 +95,7 @@ def train(
         is_ok = False
         while not is_ok:
             if model.args.dataset == "fl_officecaltech":
+                domains_list = ["caltech", "amazon", "webcam", "dslr"]
                 selected_domain_list = np.random.choice(
                     domains_list,
                     size=args.parti_num - domains_len,
