@@ -9,15 +9,16 @@ import torch.multiprocessing
 import numpy as np
 
 # multiprocessing sharing strategy
-torch.multiprocessing.set_sharing_strategy('file_system')
+torch.multiprocessing.set_sharing_strategy("file_system")
 import warnings
+
 warnings.filterwarnings("ignore")
 
 conf_path = os.getcwd()
 sys.path.append(conf_path)
-sys.path.append(conf_path + '/datasets')
-sys.path.append(conf_path + '/backbone')
-sys.path.append(conf_path + '/models')
+sys.path.append(conf_path + "/datasets")
+sys.path.append(conf_path + "/backbone")
+sys.path.append(conf_path + "/models")
 
 from datasets import Priv_NAMES as DATASET_NAMES
 from models import get_all_models
@@ -35,43 +36,71 @@ import datetime
 
 
 def parse_args():
-    parser = ArgumentParser(description='F2DC', allow_abbrev=False)
+    parser = ArgumentParser(description="F2DC", allow_abbrev=False)
 
-    parser.add_argument('--device_id', type=int, default=0, help='device id')
-    parser.add_argument('--communication_epoch', type=int, default=100, 
-                        help='global communication epoch in FL')
-    parser.add_argument('--local_epoch', type=int, default=10, 
-                        help='local epoch for client')
-    parser.add_argument('--parti_num', type=int, default=10, 
-                        help='number for local clients')
+    parser.add_argument("--device_id", type=int, default=0, help="device id")
+    parser.add_argument(
+        "--communication_epoch",
+        type=int,
+        default=100,
+        help="global communication epoch in FL",
+    )
+    parser.add_argument(
+        "--local_epoch", type=int, default=10, help="local epoch for client"
+    )
+    parser.add_argument(
+        "--parti_num", type=int, default=10, help="number for local clients"
+    )
 
-    parser.add_argument('--seed', type=int, default=55, help='random seed')
-    parser.add_argument('--rand_dataset', type=bool, default=True, help='random set dataset')
+    parser.add_argument("--seed", type=int, default=55, help="random seed")
+    parser.add_argument(
+        "--rand_dataset", type=bool, default=True, help="random set dataset"
+    )
 
-    parser.add_argument('--model', type=str, default='f2dc', 
-                        help='method name', choices=get_all_models())
-    parser.add_argument('--structure', type=str, default='heterogeneity')
-    parser.add_argument('--dataset', type=str, default='fl_pacs', 
-                        choices=DATASET_NAMES, 
-                        help='multi-domain dataset for experiments')
+    parser.add_argument(
+        "--model",
+        type=str,
+        default="f2dc",
+        help="method name",
+        choices=get_all_models(),
+    )
+    parser.add_argument("--structure", type=str, default="heterogeneity")
+    parser.add_argument(
+        "--dataset",
+        type=str,
+        default="fl_pacs",
+        choices=DATASET_NAMES,
+        help="multi-domain dataset for experiments",
+    )
 
-    parser.add_argument('--pri_aug', type=str, default='weak', 
-                        help='data augmentation')
-    parser.add_argument('--online_ratio', type=float, default=1, help='ratio for online clients')
-    parser.add_argument('--learning_decay', type=bool, default=False, help='learning rate decay')
-    parser.add_argument('--averaing', type=str, default='weight', help='averaging strategy')
+    parser.add_argument("--pri_aug", type=str, default="weak", help="data augmentation")
+    parser.add_argument(
+        "--online_ratio", type=float, default=1, help="ratio for online clients"
+    )
+    parser.add_argument(
+        "--learning_decay", type=bool, default=False, help="learning rate decay"
+    )
+    parser.add_argument(
+        "--averaing", type=str, default="weight", help="averaging strategy"
+    )
 
-    parser.add_argument('--save', type=bool, default=True, help='save model params')
-    parser.add_argument('--save_name', type=str, default='save_no', help='save name')
+    parser.add_argument("--save", type=bool, default=True, help="save model params")
+    parser.add_argument("--save_name", type=str, default="save_no", help="save name")
 
-    parser.add_argument('--gum_tau', type=float, default=0.1, help='gumbel concrete distribution')
-    parser.add_argument('--tem', type=float, default=0.06, help='DFD sep temperature')
-    parser.add_argument('--agg_a', type=float, default=1.0, help='domain-aware agg')
-    parser.add_argument('--agg_b', type=float, default=0.4, help='domain-aware agg')
-    parser.add_argument('--lambda1', type=float, default=0.8, help='params for DFD loss') 
-    parser.add_argument('--lambda2', type=float, default=1.0, help='params for DFC loss')
+    parser.add_argument(
+        "--gum_tau", type=float, default=0.1, help="gumbel concrete distribution"
+    )
+    parser.add_argument("--tem", type=float, default=0.06, help="DFD sep temperature")
+    parser.add_argument("--agg_a", type=float, default=1.0, help="domain-aware agg")
+    parser.add_argument("--agg_b", type=float, default=0.4, help="domain-aware agg")
+    parser.add_argument(
+        "--lambda1", type=float, default=0.8, help="params for DFD loss"
+    )
+    parser.add_argument(
+        "--lambda2", type=float, default=1.0, help="params for DFC loss"
+    )
 
-    parser.add_argument('--ma_select', type=str, default='resnet', help='backbone') 
+    parser.add_argument("--ma_select", type=str, default="resnet", help="backbone")
 
     # CPU core intra-op parallelism
     torch.set_num_threads(8)
@@ -104,17 +133,29 @@ def main_F2DC(args=None):
     model = get_model(backbones_list, args, priv_dataset.get_transform())
     args.arch = model.nets_list[0].name
 
-    print('{}_{}_{}_{}_{}'.format(args.model, args.parti_num, args.dataset, 
-                                args.communication_epoch, args.local_epoch))
-    setproctitle.setproctitle('{}_{}_{}_{}_{}'.format(args.model, args.parti_num, 
-                                args.dataset, args.communication_epoch, args.local_epoch))
+    print(
+        "{}_{}_{}_{}_{}".format(
+            args.model,
+            args.parti_num,
+            args.dataset,
+            args.communication_epoch,
+            args.local_epoch,
+        )
+    )
+    setproctitle.setproctitle(
+        "{}_{}_{}_{}_{}".format(
+            args.model,
+            args.parti_num,
+            args.dataset,
+            args.communication_epoch,
+            args.local_epoch,
+        )
+    )
 
     domains_acc_list = train(model, priv_dataset, args)
 
-    print(f'ACC List {args.model} ({args.dataset}):', domains_acc_list)
-    print(f'Mean ACC {args.model} ({args.dataset}):', np.mean(domains_acc_list))
-    print(f'Max ACC {args.model} ({args.dataset}):', max(domains_acc_list))
+    print(f"Accuracy List {args.model} ({args.dataset}):", domains_acc_list)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main_F2DC()
