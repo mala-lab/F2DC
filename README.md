@@ -1,6 +1,6 @@
 # $F^{2}DC$ - Federated Feature Decoupling and Calibration (CVPR 2026)
 
-Official implementation of CVPR 2026 paper: [*'Domain-Skewed Federated Learning with Feature Decoupling and Calibration'*](https://arxiv.org/pdf/2403.06495.pdf).
+Official pytorch implementation of CVPR 2026 paper: [Domain-Skewed Federated Learning with Feature Decoupling and Calibration](http://arxiv.org/abs/2603.14238).
 
 ## Abstract
 
@@ -9,6 +9,7 @@ Federated Learning (FL) allows distributed clients to collaboratively train a gl
 ![image](./figs/f2dc.png)
 
 ## Setup Libraries
+
 - python >= 3.10.11
 - torch >= 1.13.0
 - torchvision >= 0.14.0
@@ -18,26 +19,29 @@ Federated Learning (FL) allows distributed clients to collaboratively train a gl
 - tqdm >= 4.64.0
 
 ## Multi-domain Datasets
-- **Digits**: include 4 domains (*MNIST, USPS, SVHN, SYN*). 【Download Link -> [[Google Drive]](https://drive.google.com/file/d/11kJ_xVB37J3_AXflccevnK-MJS8ETFcv/view?usp=sharing)】
-- **Office-Caltech**: include 4 domains (*Caltech, Amazon, Webcam, DSLR*). 【Download Link -> [[Google Drive]](https://drive.google.com/file/d/1xm-_gh60c8iacCqTIHH0-q7ZUEexZLBo/view?usp=sharing)】
-- **PACS**: include 4 domains (*Photo, Art-Painting, Cartoon, Sketch*). 【Download Link -> [[Google Drive]](https://drive.google.com/file/d/1t-z3Lglp1_aArBAhBp4xxKI6_NSwa2qr/view?usp=sharing)】
+
+- **Digits**: include 4 domains (_MNIST, USPS, SVHN, SYN_). 【Download Link -> [[Google Drive]](https://drive.google.com/file/d/11kJ_xVB37J3_AXflccevnK-MJS8ETFcv/view?usp=sharing)】
+- **Office-Caltech**: include 4 domains (_Caltech, Amazon, Webcam, DSLR_). 【Download Link -> [[Google Drive]](https://drive.google.com/file/d/1xm-_gh60c8iacCqTIHH0-q7ZUEexZLBo/view?usp=sharing)】
+- **PACS**: include 4 domains (_Photo, Art-Painting, Cartoon, Sketch_). 【Download Link -> [[Google Drive]](https://drive.google.com/file/d/1t-z3Lglp1_aArBAhBp4xxKI6_NSwa2qr/view?usp=sharing)】
 - After downloading these datasets, please place them in the "./rundata/dataset/" folder.
 
 ## Run Experiments
+
 - Run $F^{2}DC$ on **Digits**:
-    ```python
-    python3 main_run.py --parti_num 20 --model f2dc --dataset fl_digits
-    ```
+  ```python
+  python3 main_run.py --parti_num 20 --model f2dc --dataset fl_digits
+  ```
 - Run $F^{2}DC$ on **Office-Caltech**:
-    ```python
-    python3 main_run.py --parti_num 10 --model f2dc --dataset fl_officecaltech
-    ```
+  ```python
+  python3 main_run.py --parti_num 10 --model f2dc --dataset fl_officecaltech
+  ```
 - Run $F^{2}DC$ on **PACS**:
-    ```python
-    python3 main_run.py --parti_num 10 --model f2dc --dataset fl_pacs
-    ```
+  ```python
+  python3 main_run.py --parti_num 10 --model f2dc --dataset fl_pacs
+  ```
 
 ## Citation
+
 ```
 @inproceedings{WangF2DC_CVPR26,
     author={Wang, Huan and Shen, Jun and Yan, Jun and Pang, Guansong},
