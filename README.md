@@ -11,7 +11,7 @@
 
 </div>
 
-Official implementation of CVPR'26 paper [Domain-Skewed Federated Learning with Feature Decoupling and Calibration](http://arxiv.org/abs/2603.14238).
+Official implementation of [Domain-Skewed Federated Learning with Feature Decoupling and Calibration](http://arxiv.org/abs/2603.14238).
 
 ## Abstract
 
