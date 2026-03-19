@@ -1,6 +1,17 @@
-# $F^{2}DC$ - Federated Feature Decoupling and Calibration (CVPR 2026)
+<div align="center">
+  <h2><b>F<sup>2</sup>DC - Federated Feature Decoupling and Calibration (CVPR 2026)</b></h2>
+</div>
 
-Official pytorch implementation of CVPR 2026 paper: [Domain-Skewed Federated Learning with Feature Decoupling and Calibration](http://arxiv.org/abs/2603.14238).
+<div align="center">
+
+![](https://img.shields.io/github/last-commit/mala-lab/F2DC?color=blue)
+![](https://img.shields.io/github/stars/mala-lab/F2DC?color=blue)
+![](https://img.shields.io/github/forks/mala-lab/F2DC?color=lightblue)
+[![License: MIT](https://img.shields.io/badge/License-Apache--2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+
+</div>
+
+Official implementation of CVPR'26 paper [Domain-Skewed Federated Learning with Feature Decoupling and Calibration](http://arxiv.org/abs/2603.14238).
 
 ## Abstract
 
