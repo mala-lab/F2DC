@@ -54,7 +54,7 @@ Federated Learning (FL) allows distributed clients to collaboratively train a gl
 ## Citation
 
 ```
-@inproceedings{WangF2DC_CVPR26,
+@inproceedings{wang2026f2dc,
     author={Wang, Huan and Shen, Jun and Yan, Jun and Pang, Guansong},
     title={Domain-Skewed Federated Learning with Feature Decoupling and Calibration},
     booktitle={Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition},
