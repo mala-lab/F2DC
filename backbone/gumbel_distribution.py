@@ -2,9 +2,9 @@ import torch
 from torch import nn
 
 
-class GumbelSigmoid(nn.Module):
+class GumbelDis(nn.Module):
     def __init__(self, tau=1.0):
-        super(GumbelSigmoid, self).__init__()
+        super(GumbelDis, self).__init__()
         self.tau = tau
         self.softmax = nn.Softmax(dim=1)
         self.p_value = 1e-8

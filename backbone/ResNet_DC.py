@@ -1,7 +1,7 @@
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from backbone.gumbel_sigmoid import GumbelSigmoid
+from backbone.gumbel_distribution import GumbelDis
 
 
 class DFD(torch.nn.Module):
@@ -21,7 +21,7 @@ class DFD(torch.nn.Module):
         rob_map = self.net(feat)
         mask = rob_map.reshape(rob_map.shape[0], 1, -1)
         mask = torch.nn.Sigmoid()(mask)
-        mask = GumbelSigmoid(tau=self.tau)(mask, is_eval=is_eval)
+        mask = GumbelDis(tau=self.tau)(mask, is_eval=is_eval)
         mask = mask[:, 0].reshape(mask.shape[0], self.C, self.H, self.W)
         r_feat = feat * mask
         nr_feat = feat * (1 - mask)
