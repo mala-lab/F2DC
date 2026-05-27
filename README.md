@@ -7,8 +7,8 @@
 ![](https://img.shields.io/github/last-commit/mala-lab/F2DC?color=blue)
 ![](https://img.shields.io/github/stars/mala-lab/F2DC?color=blue)
 ![](https://img.shields.io/github/forks/mala-lab/F2DC?color=lightblue)
-[![License: MIT](https://img.shields.io/badge/License-Apache--2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
-
+![](https://img.shields.io/badge/PRs-Welcome-green)
+[![arXiv](https://img.shields.io/badge/arXiv-2603.14238-b31b1b)](https://arxiv.org/abs/2603.14238)
 </div>
 
 Official implementation of [Domain-Skewed Federated Learning with Feature Decoupling and Calibration](http://arxiv.org/abs/2603.14238).
