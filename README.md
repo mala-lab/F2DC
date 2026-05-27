@@ -6,7 +6,7 @@
 
 ![](https://img.shields.io/github/last-commit/mala-lab/F2DC?color=blue)
 ![](https://img.shields.io/github/stars/mala-lab/F2DC?color=yellow)
-![](https://img.shields.io/github/forks/mala-lab/F2DC?color=lightblue)
+![](https://img.shields.io/github/forks/mala-lab/F2DC?color=lightblue&label=Forks)
 ![](https://img.shields.io/badge/PRs-Welcome-green)
 [![arXiv](https://img.shields.io/badge/arXiv-2603.14238-b31b1b)](https://arxiv.org/abs/2603.14238)
 </div>
@@ -53,11 +53,14 @@ Federated Learning (FL) allows distributed clients to collaboratively train a gl
 
 ## Citation
 
-```
-@inproceedings{wang2026f2dc,
-    author={Wang, Huan and Shen, Jun and Yan, Jun and Pang, Guansong},
-    title={Domain-Skewed Federated Learning with Feature Decoupling and Calibration},
-    booktitle={Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition},
-    year={2026}
-}
-```
+- If you would like to discuss any details about this work, please feel free to email me (huanwang1018@gmail.com) or open a GitHub issue.
+
+- If you find this work useful, please cite our paper:
+  ```bibtex
+  @inproceedings{wang2026f2dc,
+      author={Wang, Huan and Shen, Jun and Yan, Jun and Pang, Guansong},
+      title={Domain-Skewed Federated Learning with Feature Decoupling and Calibration},
+      booktitle={Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition},
+      year={2026}
+  }
+  ```
