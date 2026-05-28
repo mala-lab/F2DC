@@ -51,11 +51,11 @@ Federated Learning (FL) allows distributed clients to collaboratively train a gl
   python3 main_run.py --parti_num 10 --model f2dc --dataset fl_pacs
   ```
 
-## Citation
+## 📚 Citation
 
 - If you would like to discuss any details about this work, please feel free to email me (huanwang1018@gmail.com) or open a GitHub issue (email is usually replied faster; sorry for any delay).
 
-- If you find this work useful, please cite our paper:
+- If this repository or the paper is helpful to your work, please cite:
   ```bibtex
   @inproceedings{wang2026f2dc,
       author={Wang, Huan and Shen, Jun and Yan, Jun and Pang, Guansong},
