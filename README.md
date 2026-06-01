@@ -3,7 +3,6 @@
 </div>
 
 <div align="center">
-
 ![](https://img.shields.io/github/last-commit/mala-lab/F2DC?color=blue)
 ![](https://img.shields.io/github/stars/mala-lab/F2DC?color=yellow)
 ![](https://img.shields.io/github/forks/mala-lab/F2DC?color=lightblue&label=Forks)
@@ -13,9 +12,9 @@
 
 Official implementation of [Domain-Skewed Federated Learning with Feature Decoupling and Calibration](http://arxiv.org/abs/2603.14238).
 
-## Overview
+## 🔎 Overview
 
-Federated Learning (FL) allows distributed clients to collaboratively train a global model in a privacy-preserving manner. However, one major challenge is domain skew, where clients' data originating from diverse domains may hinder the aggregated global model from learning a consistent representation space, resulting in poor generalizable ability in multiple domains. In this paper, we argue that the domain skew is reflected in the domain-specific biased features of each client, causing the local model's representations to collapse into a narrow low-dimensional subspace. We then propose **F**ederated **F**eature **D**ecoupling and **C**alibration (**$F^{2}DC$**), which liberates valuable class-relevant information by calibrating the domain-specific biased features, enabling more consistent representations across domains. A novel component, Domain Feature Decoupler (DFD), is first introduced in $F^{2}DC$ to determine the robustness of each feature unit, thereby separating the local features into domain-robust features and domain-related features. A Domain Feature Corrector (DFC) is further proposed to calibrate these domain-related features by explicitly linking discriminative signals, capturing additional class-relevant clues that complement the domain-robust features. Finally, a domain-aware aggregation of the local models is performed to promote consensus among clients. Empirical results on three popular multi-domain datasets demonstrate the effectiveness of the proposed $F^{2}DC$ and the contributions of its two modules.
+Federated Learning (FL) allows distributed clients to collaboratively train a global model in a privacy-preserving manner. However, one major challenge is domain skew, where clients' data originating from diverse domains may hinder the aggregated global model from learning a consistent representation space, resulting in poor generalizable ability in multiple domains. In this paper, we argue that the domain skew is reflected in the domain-specific biased features of each client, causing the local model's representations to collapse into a narrow low-dimensional subspace. We then propose **F**ederated **F**eature **D**ecoupling and **C**alibration (**$F^{2}DC$**), which liberates valuable class-relevant information by calibrating the domain-specific biased features, enabling more consistent representations across domains. A novel component, Domain Feature Decoupler (DFD), is first introduced in $F^{2}DC$ to determine the robustness of each feature unit, thereby separating the local features into domain-robust features and domain-related features. A Domain Feature Corrector (DFC) is further proposed to calibrate these domain-related features by explicitly linking discriminative signals, capturing additional class-relevant clues that complement the domain-robust features. Finally, a domain-aware aggregation of the local models is performed to promote consensus among clients. Empirical results on three popular multi-domain datasets demonstrate the effectiveness of the proposed $F^{2}DC$ and the contributions of its two modules. The framework diagram of the proposed $F^{2}DC$ is shown below:
 
 ![image](./figs/f2dc.png)
 
@@ -57,10 +56,11 @@ Federated Learning (FL) allows distributed clients to collaboratively train a gl
 
 - If this repository or the paper is helpful to your work, please cite:
   ```bibtex
-  @inproceedings{wang2026f2dc,
-      author={Wang, Huan and Shen, Jun and Yan, Jun and Pang, Guansong},
-      title={Domain-Skewed Federated Learning with Feature Decoupling and Calibration},
-      booktitle={Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition},
-      year={2026}
+  @inproceedings{wang2026domain,
+    title={Domain-Skewed Federated Learning with Feature Decoupling and Calibration},
+    author={Wang, Huan and Shen, Jun and Yan, Jun and Pang, Guansong},
+    booktitle={Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition},
+    pages={17484--17493},
+    year={2026}
   }
   ```
