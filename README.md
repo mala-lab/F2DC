@@ -3,6 +3,7 @@
 </div>
 
 <div align="center">
+
 ![](https://img.shields.io/github/last-commit/mala-lab/F2DC?color=blue)
 ![](https://img.shields.io/github/stars/mala-lab/F2DC?color=yellow)
 ![](https://img.shields.io/github/forks/mala-lab/F2DC?color=lightblue&label=Forks)
@@ -28,7 +29,7 @@ Federated Learning (FL) allows distributed clients to collaboratively train a gl
 - numpy >= 1.24.3
 - tqdm >= 4.64.0
 
-## Multi-domain Datasets
+## Multi-domain Federated Datasets
 
 - **Digits**: include 4 domains (_MNIST, USPS, SVHN, SYN_). 【Download Link -> [[Google Drive]](https://drive.google.com/file/d/11kJ_xVB37J3_AXflccevnK-MJS8ETFcv/view?usp=sharing)】
 - **Office-Caltech**: include 4 domains (_Caltech, Amazon, Webcam, DSLR_). 【Download Link -> [[Google Drive]](https://drive.google.com/file/d/1xm-_gh60c8iacCqTIHH0-q7ZUEexZLBo/view?usp=sharing)】
