@@ -54,7 +54,7 @@ def parse_args():
 
     parser.add_argument("--seed", type=int, default=1234, help="random seed")
     parser.add_argument(
-        "--rand_dataset", type=bool, default=False, help="random set dataset"
+        "--rand_dataset", type=bool, default=True, help="random set dataset"
     )
 
     parser.add_argument(

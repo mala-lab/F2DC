@@ -40,19 +40,18 @@ Federated Learning (FL) allows distributed clients to collaboratively train a gl
 
 - Run $F^{2}DC$ on **Digits**:
   ```python
-  python3 main_run.py --parti_num 20 --model f2dc --dataset fl_digits
+  python3 main_run.py --parti_num 20 --model f2dc --dataset fl_digits --rand_dataset False
   ```
 - Run $F^{2}DC$ on **Office-Caltech**:
   ```python
-  python3 main_run.py --parti_num 10 --model f2dc --dataset fl_officecaltech
+  python3 main_run.py --parti_num 10 --model f2dc --dataset fl_officecaltech --rand_dataset False
   ```
 - Run $F^{2}DC$ on **PACS**:
   ```python
-  python3 main_run.py --parti_num 10 --model f2dc --dataset fl_pacs
+  python3 main_run.py --parti_num 10 --model f2dc --dataset fl_pacs --rand_dataset False
   ```
 
 ## 📚 Citation
-
 - If you would like to discuss any details about this work, please feel free to email me (huanwang1018@gmail.com) or open a GitHub issue (email is usually replied faster; sorry for any delay).
 
 - If this repository or the paper is helpful to your work, please cite:
