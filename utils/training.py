@@ -26,7 +26,7 @@ def global_evaluate(
             with torch.no_grad():
                 images, labels = images.to(model.device), labels.to(model.device)
                 if model.NAME == "f2dc":
-                    outputs, _, _, _, _ = net(images)
+                    outputs = net(images)[0]
                 else:
                     outputs = net(images)
                 _, max5 = torch.topk(outputs, 5, dim=-1)
@@ -123,13 +123,13 @@ def train(
             else:
                 is_ok = True
 
-    else:
-        selected_domain_dict = {
-            "mnist": 6,
-            "usps": 4,
-            "svhn": 3,
-            "syn": 7,
-        }  # base for fl_digits
+    else: # args.rand_dataset=False, use the fixed dataset partition
+        if model.args.dataset == "fl_officecaltech":
+            selected_domain_dict = {"caltech": 3, "amazon": 2, "webcam": 2, "dslr": 3}
+        elif model.args.dataset == "fl_pacs":
+            selected_domain_dict = {"photo": 2, "art": 3, "cartoon": 2, "sketch": 3}  # pacs
+        else:
+            selected_domain_dict = {"mnist": 3, "usps": 6, "svhn": 6, "syn": 5}
         selected_domain_list = []
         for k in selected_domain_dict:
             domain_num = selected_domain_dict[k]
@@ -139,6 +139,9 @@ def train(
         selected_domain_list = np.random.permutation(selected_domain_list)
 
         result = Counter(selected_domain_list)
+
+    if isinstance(selected_domain_list, np.ndarray):
+        selected_domain_list = selected_domain_list.tolist()
 
     # print(result)
     print(f"selected_domain_list for {args.parti_num} clients as:")
@@ -178,9 +181,7 @@ def train(
             "The " + str(epoch_index) + " Communcation Time:",
             round(end_time - start_time, 3),
         )
-
         # all_dis = 0.0
-
         accs = global_evaluate(
             model, test_loaders, private_dataset.SETTING, private_dataset.NAME
         )
@@ -202,7 +203,6 @@ def train(
         )
         print(accs)
         print()
-
         if args.save:
             if args.save_name == "No":
                 pth_name = args.model
@@ -214,6 +214,5 @@ def train(
 
     if args.csv_log:
         csv_writer.write_acc(accs_dict, mean_accs_list)
-
     print("ALL Loss: ", all_epoch_loss)
     return mean_accs_list

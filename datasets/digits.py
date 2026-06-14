@@ -8,13 +8,13 @@ from datasets.transforms.denormalization import DeNormalize
 from backbone.ResNet import resnet10, resnet12
 from backbone.efficientnet import EfficientNetB0
 from backbone.ResNet_DC import resnet10_dc_digits
-from backbone.VGGNet_DC import alexnet_dc_digits
 from backbone.VGGNet import vggnet
 from backbone.mobileNet import mobilenet
 from backbone.mobilnet_v2 import MobileNetV2, mobile_dc_digits
 from torchvision.datasets import MNIST, SVHN, ImageFolder, DatasetFolder, USPS
 
 
+DATA_PATH = data_path() + 'digits10/'
 class MyDigits(data.Dataset):
     def __init__(self, root, train=True, transform=None,
                  target_transform=None, download=True, data_name=None) -> None:
@@ -124,28 +124,26 @@ class FedLeaDigits(FederatedDataset):
 
         for _, domain in enumerate(using_list):
             if domain == 'syn':
-                train_dataset = ImageFolder_Custom(data_name=domain, root=data_path(), train=True,
-                                                   transform=nor_transform)
+                train_dataset = ImageFolder_Custom(data_name=domain, root=DATA_PATH, train=True, transform=nor_transform)
             else:
                 if domain in ['mnist', 'usps']:
-                    train_dataset = MyDigits(data_path(), train=True,
+                    train_dataset = MyDigits(DATA_PATH, train=True,
                                              download=True, transform=sin_chan_nor_transform, data_name=domain)
                 else:
-                    train_dataset = MyDigits(data_path(), train=True,
+                    train_dataset = MyDigits(DATA_PATH, train=True,
                                              download=True, transform=nor_transform, data_name=domain)
             train_dataset_list.append(train_dataset)
 
         for _, domain in enumerate(self.DOMAINS_LIST):
             if domain == 'syn':
-                test_dataset = ImageFolder_Custom(data_name=domain, root=data_path(), train=False,
-                                                  transform=test_transform)
+                test_dataset = ImageFolder_Custom(data_name=domain, root=DATA_PATH, train=False, transform=test_transform)
             else:
                 if domain in ['mnist', 'usps']:
-                    test_dataset = MyDigits(data_path(), train=False,
+                    test_dataset = MyDigits(DATA_PATH, train=False,
                                             download=True, transform=sin_chan_test_transform, data_name=domain)
                 else:
 
-                    test_dataset = MyDigits(data_path(), train=False,
+                    test_dataset = MyDigits(DATA_PATH, train=False,
                                             download=True, transform=test_transform, data_name=domain)
 
             test_dataset_list.append(test_dataset)

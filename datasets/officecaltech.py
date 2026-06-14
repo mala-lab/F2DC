@@ -7,7 +7,6 @@ from backbone.efficientnet import EfficientNetB0
 from backbone.googlenet import GoogLeNet
 from backbone.mobilnet_v2 import MobileNetV2, mobile_dc_office
 from backbone.ResNet_DC import resnet10_dc_office
-from backbone.VGGNet_DC import alexnet_dc_office
 from torchvision.datasets import ImageFolder, DatasetFolder
 from backbone.VGGNet import vggnet
 from backbone.mobileNet import mobilenet
@@ -21,9 +20,9 @@ class ImageFolder_Custom(DatasetFolder):
         self.transform = transform
         self.target_transform = target_transform
         if train:
-            self.imagefolder_obj = ImageFolder(self.root + 'Office_Caltech_10/' + self.data_name + '/', self.transform, self.target_transform)
+            self.imagefolder_obj = ImageFolder(self.root + 'office10/' + self.data_name + '/', self.transform, self.target_transform)
         else:
-            self.imagefolder_obj = ImageFolder(self.root + 'Office_Caltech_10/' + self.data_name + '/', self.transform, self.target_transform)
+            self.imagefolder_obj = ImageFolder(self.root + 'office10/' + self.data_name + '/', self.transform, self.target_transform)
 
         all_data=self.imagefolder_obj.samples
         self.train_index_list=[]
@@ -62,7 +61,7 @@ class FedLeaOfficeCaltech(FederatedDataset):
     NAME = 'fl_officecaltech'
     SETTING = 'domain_skew'
     DOMAINS_LIST = ['caltech', 'amazon', 'webcam', 'dslr']
-    percent_dict = {'caltech': 0.2, 'amazon': 0.2, 'webcam':0.2, 'dslr': 0.2} # 20% data size
+    percent_dict = {'caltech': 0.2, 'amazon': 0.2, 'webcam':0.2, 'dslr': 0.2}
 
     N_SAMPLES_PER_Class = None
     N_CLASS = 10
@@ -85,14 +84,12 @@ class FedLeaOfficeCaltech(FederatedDataset):
             [transforms.Resize((32, 32)), transforms.ToTensor(), self.get_normalization_transform()])
 
         for _, domain in enumerate(using_list):
-            train_dataset = ImageFolder_Custom(data_name=domain, root=data_path(), train=True,
-                                               transform=nor_transform)
+            train_dataset = ImageFolder_Custom(data_name=domain, root=data_path(), train=True, transform=nor_transform)
 
             train_dataset_list.append(train_dataset)
 
         for _, domain in enumerate(self.DOMAINS_LIST):
-            test_dataset = ImageFolder_Custom(data_name=domain, root=data_path(), train=False,
-                                              transform=test_transform)
+            test_dataset = ImageFolder_Custom(data_name=domain, root=data_path(), train=False, transform=test_transform)
             test_dataset_list.append(test_dataset)
 
         traindls, testdls = partition_office_domain_skew_loaders_new(train_dataset_list, test_dataset_list, self.args.model, self)

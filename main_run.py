@@ -52,9 +52,9 @@ def parse_args():
         "--parti_num", type=int, default=10, help="number for local clients"
     )
 
-    parser.add_argument("--seed", type=int, default=55, help="random seed")
+    parser.add_argument("--seed", type=int, default=1234, help="random seed")
     parser.add_argument(
-        "--rand_dataset", type=bool, default=True, help="random set dataset"
+        "--rand_dataset", type=bool, default=False, help="random set dataset"
     )
 
     parser.add_argument(
@@ -75,7 +75,7 @@ def parse_args():
 
     parser.add_argument("--pri_aug", type=str, default="weak", help="data augmentation")
     parser.add_argument(
-        "--online_ratio", type=float, default=1, help="ratio for online clients"
+        "--online_ratio", type=float, default=1.0, help="ratio for online clients"
     )
     parser.add_argument(
         "--learning_decay", type=bool, default=False, help="learning rate decay"

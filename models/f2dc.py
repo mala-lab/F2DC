@@ -56,7 +56,7 @@ class F2DC(FederatedModel):
     def _train_net(self, index, net, train_loader):
         net = net.to(self.device)
         net.train()
-        optimizer = optim.SGD(net.parameters(), lr=self.local_lr, momentum=0.9, weight_decay=1e-5)
+        optimizer = optim.SGD(net.parameters(), lr=0.1)
         criterion = nn.CrossEntropyLoss()
         criterion.to(self.device)
 
@@ -72,7 +72,6 @@ class F2DC(FederatedModel):
                 optimizer.zero_grad()
                 images = images.to(self.device)
                 labels = labels.to(self.device)
-
                 out, feat, ro_outputs, re_outputs, rec_outputs, ro_flatten, re_flatten = net(images)
                 outputs = out
                 wrong_high_labels = get_pred(out, labels)
@@ -87,15 +86,13 @@ class F2DC(FederatedModel):
                     for re_out in re_outputs:
                         DFD_dis2_loss += 1.0 * criterion(re_out, wrong_high_labels)
                     DFD_dis2_loss /= len(re_outputs)
-                DFD_sep_loss = torch.tensor(0.).to(self.device)
+                DFD_sep_loss = torch.tensor(0.).to(self.device) 
                 l_cos = torch.cosine_similarity(ro_flatten, re_flatten, dim=1)
                 l_cos = l_cos / self.tem
-                exp_l_cos = torch.exp(l_cos)
-                DFD_sep_loss += torch.log(exp_l_cos)
+                exp_l_cos = torch.exp(l_cos) 
+                DFD_sep_loss += torch.log(exp_l_cos).sum()
                 DFD_sep_loss /= ro_flatten.size(0)
-                
-                DFD_loss = DFD_dis1_loss + DFD_dis2_loss + DFD_sep_loss
-
+                DFD_loss = DFD_dis1_loss + DFD_dis2_loss + DFD_sep_loss 
                 DFC_loss = torch.tensor(0.).to(self.device)
                 if not len(rec_outputs) == 0:
                     for rec_out in rec_outputs:
@@ -120,4 +117,4 @@ class F2DC(FederatedModel):
 
         global_avg_loss = global_loss / global_samples
 
-        return round(global_avg_loss, 3), num_c_samples 
+        return round(global_avg_loss, 3), num_c_samples

@@ -5,13 +5,16 @@ from backbone.gumbel_distribution import GumbelDis
 
 
 class DFD(torch.nn.Module):
-    def __init__(self, size, num_channel=64, tau=0.1):
+    def __init__(self, size, num_channel=50, tau=0.1):
         super(DFD, self).__init__()
         C, H, W = size
         self.C, self.H, self.W = C, H, W
         self.tau = tau
         self.net = nn.Sequential(
             nn.Conv2d(C, num_channel, kernel_size=3, stride=1, padding=1, bias=False),
+            nn.BatchNorm2d(num_channel),
+            nn.ReLU(),
+            nn.Conv2d(num_channel, num_channel, kernel_size=3, stride=1, padding=1, bias=False),
             nn.BatchNorm2d(num_channel),
             nn.ReLU(),
             nn.Conv2d(num_channel, C, kernel_size=3, stride=1, padding=1, bias=False)
@@ -30,11 +33,14 @@ class DFD(torch.nn.Module):
 
 
 class DFC(nn.Module):
-    def __init__(self, size, num_channel=64):
+    def __init__(self, size, num_channel=50):
         super(DFC, self).__init__()
         C, H, W = size
         self.net = nn.Sequential(
             nn.Conv2d(C, num_channel, kernel_size=3, stride=1, padding=1, bias=False),
+            nn.BatchNorm2d(num_channel),
+            nn.ReLU(),
+            nn.Conv2d(num_channel, num_channel, kernel_size=3, stride=1, padding=1, bias=False),
             nn.BatchNorm2d(num_channel),
             nn.ReLU(),
             nn.Conv2d(num_channel, C, kernel_size=3, stride=1, padding=1, bias=False)
@@ -143,6 +149,9 @@ class ResNet(nn.Module):
         # print(out.shape)
 
         r_feat, nr_feat, mask = self.dfd_module(out, is_eval=is_eval)
+        ro_flatten = torch.nn.AdaptiveAvgPool2d(1)(r_feat).reshape(r_feat.shape[0], -1)
+        re_flatten = torch.nn.AdaptiveAvgPool2d(1)(nr_feat).reshape(nr_feat.shape[0], -1)
+
         r_out = self.aux(torch.nn.AdaptiveAvgPool2d(1)(r_feat).reshape(r_feat.shape[0], -1))
         r_outputs.append(r_out)
         nr_out = self.aux(torch.nn.AdaptiveAvgPool2d(1)(nr_feat).reshape(nr_feat.shape[0], -1))
@@ -159,11 +168,7 @@ class ResNet(nn.Module):
         out = self.linear(out)
         # print(rec_feat.shape)
         
-        return out, feat, r_outputs, nr_outputs, rec_outputs
-
-
-def ResNet18_FSR(num_classes=10, tau=0.1, image_size=(32, 32)):
-    return ResNet(BasicBlock, [2, 2, 2, 2], num_classes=num_classes, tau=tau, image_size=image_size)
+        return out, feat, r_outputs, nr_outputs, rec_outputs, ro_flatten, re_flatten
 
 def resnet10_dc(num_classes=7, gum_tau=0.1):
     return ResNet(BasicBlock, [1, 1, 1, 1], num_classes=num_classes, tau=gum_tau, image_size=(128, 128))

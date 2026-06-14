@@ -3,9 +3,7 @@ from utils.conf import data_path
 from datasets.utils.federated_dataset import FederatedDataset, partition_pacs_domain_skew_loaders
 from datasets.transforms.denormalization import DeNormalize
 from backbone.ResNet import resnet10, resnet12, resnet18, resnet34
-from backbone.WRN import wrn_28_10
 from backbone.ResNet_DC import resnet10_dc, resnet34_dc
-from backbone.VGGNet_DC import alexnet_dc
 from backbone.efficientnet import EfficientNetB0
 from backbone.googlenet import GoogLeNet
 from backbone.mobilnet_v2 import MobileNetV2, mobile_dc
@@ -22,9 +20,9 @@ class ImageFolder_Custom(DatasetFolder):
         self.transform = transform
         self.target_transform = target_transform
         if train:
-            self.imagefolder_obj = ImageFolder(self.root + 'PACS_7/' + self.data_name + '/', self.transform, self.target_transform)
+            self.imagefolder_obj = ImageFolder(self.root + 'pacs7/' + self.data_name + '/', self.transform, self.target_transform)
         else:
-            self.imagefolder_obj = ImageFolder(self.root + 'PACS_7/' + self.data_name + '/', self.transform, self.target_transform)
+            self.imagefolder_obj = ImageFolder(self.root + 'pacs7/' + self.data_name + '/', self.transform, self.target_transform)
 
         all_data = self.imagefolder_obj.samples
         self.train_index_list=[]

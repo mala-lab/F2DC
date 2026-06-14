@@ -5,7 +5,7 @@ from torch import nn
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from backbone.gumbel_sigmoid import GumbelSigmoid
+from backbone.gumbel_distribution import GumbelDis
 
 
 __all__ = [
@@ -24,14 +24,16 @@ vgg_cfgs: Dict[str, List[Union[str, int]]] = {
 
 
 class DFD(torch.nn.Module):
-    def __init__(self, size, num_channel=64, tau=0.1):
+    def __init__(self, size, num_channel=50, tau=0.1):
         super(DFD, self).__init__()
         C, H, W = size
         self.C, self.H, self.W = C, H, W
         self.tau = tau
-
         self.net = nn.Sequential(
             nn.Conv2d(C, num_channel, kernel_size=3, stride=1, padding=1, bias=False),
+            nn.BatchNorm2d(num_channel),
+            nn.ReLU(),
+            nn.Conv2d(num_channel, num_channel, kernel_size=3, stride=1, padding=1, bias=False),
             nn.BatchNorm2d(num_channel),
             nn.ReLU(),
             nn.Conv2d(num_channel, C, kernel_size=3, stride=1, padding=1, bias=False)
@@ -41,9 +43,8 @@ class DFD(torch.nn.Module):
         rob_map = self.net(feat)
         mask = rob_map.reshape(rob_map.shape[0], 1, -1)
         mask = torch.nn.Sigmoid()(mask)
-        mask = GumbelSigmoid(tau=self.tau)(mask, is_eval=is_eval)
+        mask = GumbelDis(tau=self.tau)(mask, is_eval=is_eval)
         mask = mask[:, 0].reshape(mask.shape[0], self.C, self.H, self.W)
-
         r_feat = feat * mask
         nr_feat = feat * (1 - mask)
 
@@ -51,11 +52,14 @@ class DFD(torch.nn.Module):
 
 
 class DFC(nn.Module):
-    def __init__(self, size, num_channel=64):
+    def __init__(self, size, num_channel=50):
         super(DFC, self).__init__()
         C, H, W = size
         self.net = nn.Sequential(
             nn.Conv2d(C, num_channel, kernel_size=3, stride=1, padding=1, bias=False),
+            nn.BatchNorm2d(num_channel),
+            nn.ReLU(),
+            nn.Conv2d(num_channel, num_channel, kernel_size=3, stride=1, padding=1, bias=False),
             nn.BatchNorm2d(num_channel),
             nn.ReLU(),
             nn.Conv2d(num_channel, C, kernel_size=3, stride=1, padding=1, bias=False)
@@ -65,7 +69,6 @@ class DFC(nn.Module):
         rec_units = self.net(nr_feat)
         rec_units = rec_units * (1 - mask)
         rec_feat = nr_feat + rec_units
-
         return rec_feat
 
 

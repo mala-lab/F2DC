@@ -166,8 +166,7 @@ def partition_digits_domain_skew_loaders(train_datasets: list, test_datasets: li
     return setting.train_loaders, setting.test_loader
 
 
-def partition_office_domain_skew_loaders_new(train_datasets: list, test_datasets: list, model_name: str, 
-                                             setting: FederatedDataset) -> Tuple[list, list]:
+def partition_office_domain_skew_loaders_new(train_datasets: list, test_datasets: list, model_name: str, setting: FederatedDataset) -> Tuple[list, list]:
     ini_len_dict = {}
     not_used_index_dict = {}
     all_labels_list = []
